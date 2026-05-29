@@ -60,8 +60,9 @@ export const AssistantMessage = memo(function AssistantMessage({ content, isStre
       trigger.dataset.openWithHref = href
       trigger.setAttribute('aria-label', '打开方式')
       trigger.tabIndex = -1
-      trigger.textContent = '▾'
-      trigger.style.cssText = 'margin-left:3px;padding:0 3px;border:none;background:transparent;color:var(--color-text-tertiary);cursor:pointer;font-size:11px;line-height:1;vertical-align:middle'
+      trigger.textContent = '打开方式 ⌄'
+      // A clear, properly-sized pill (not a tiny bare caret): bigger hit target + discoverable.
+      trigger.style.cssText = 'display:inline-flex;align-items:center;margin:0 3px;padding:1px 8px;border:1px solid var(--color-border);border-radius:9px;background:var(--color-surface);color:var(--color-text-secondary);cursor:pointer;font-size:11px;line-height:1.5;vertical-align:middle;white-space:nowrap'
       return trigger
     }
 
