@@ -1090,6 +1090,8 @@ export const en = {
   'settings.general.h5AccessProxyNote': 'Currently using a reverse proxy URL. Phones reach the desktop through the public domain / tunnel you configured. Make sure your proxy is still up.',
   'settings.general.networkTitle': 'Network',
   'settings.general.networkDescription': 'Controls provider API requests made by desktop sessions.',
+  'settings.general.networkProxyModeDirect': 'Direct connection',
+  'settings.general.networkProxyModeDirectDescription': 'Do not use inherited proxy settings for provider API requests.',
   'settings.general.networkProxyModeSystem': 'System proxy',
   'settings.general.networkProxyModeSystemDescription': 'Use proxy settings inherited by the app process.',
   'settings.general.networkProxyModeManual': 'Manual proxy',

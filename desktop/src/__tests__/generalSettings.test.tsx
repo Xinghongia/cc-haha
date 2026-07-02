@@ -220,7 +220,7 @@ describe('Settings > General tab', () => {
       webSearch: { mode: 'auto', tavilyApiKey: '', braveApiKey: '' },
       network: {
         aiRequestTimeoutMs: 120_000,
-        proxy: { mode: 'system', url: '' },
+        proxy: { mode: 'direct', url: '' },
       },
       h5Access: {
         enabled: false,
@@ -441,7 +441,8 @@ describe('Settings > General tab', () => {
     render(<Settings />)
 
     fireEvent.click(screen.getByText('General'))
-    expect(screen.getByRole('button', { name: /System proxy/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: /Direct connection/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: /System proxy/i })).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: /Manual proxy/i }))
     const proxyInput = screen.getByLabelText('Proxy URL')

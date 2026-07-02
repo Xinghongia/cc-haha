@@ -2184,6 +2184,11 @@ export function GeneralSettings() {
 
   const NETWORK_PROXY_MODES: Array<{ value: NetworkProxyMode; label: string; description: string }> = [
     {
+      value: 'direct',
+      label: t('settings.general.networkProxyModeDirect'),
+      description: t('settings.general.networkProxyModeDirectDescription'),
+    },
+    {
       value: 'system',
       label: t('settings.general.networkProxyModeSystem'),
       description: t('settings.general.networkProxyModeSystemDescription'),
@@ -2334,7 +2339,7 @@ export function GeneralSettings() {
         aiRequestTimeoutMs: parsedNetworkTimeoutSeconds * 1000,
         proxy: {
           mode: networkDraft.proxy.mode,
-          url: networkProxyUrl,
+          url: networkDraft.proxy.mode === 'manual' ? networkProxyUrl : '',
         },
       })
       addToast({

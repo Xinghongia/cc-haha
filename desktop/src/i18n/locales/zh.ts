@@ -1092,6 +1092,8 @@ export const zh: Record<TranslationKey, string> = {
   'settings.general.h5AccessProxyNote': '当前使用的是反向代理 URL，手机扫码会经公网/隧道返回桌面端。请确认你的反代仍能工作。',
   'settings.general.networkTitle': '网络',
   'settings.general.networkDescription': '控制桌面会话发起的服务商 API 请求。',
+  'settings.general.networkProxyModeDirect': '直连',
+  'settings.general.networkProxyModeDirectDescription': '服务商 API 请求不使用应用进程继承到的代理。',
   'settings.general.networkProxyModeSystem': '系统代理',
   'settings.general.networkProxyModeSystemDescription': '使用应用进程继承到的代理设置。',
   'settings.general.networkProxyModeManual': '手动代理',

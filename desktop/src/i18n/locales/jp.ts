@@ -1092,6 +1092,8 @@ export const jp: Record<TranslationKey, string> = {
   'settings.general.h5AccessProxyNote': '現在リバースプロキシ URL を使用しています。スマートフォンは、設定した公開ドメイン / トンネルを通じてデスクトップに到達します。プロキシが稼働中であることを確認してください。',
   'settings.general.networkTitle': 'ネットワーク',
   'settings.general.networkDescription': 'デスクトップセッションが行うプロバイダー API リクエストを制御します。',
+  'settings.general.networkProxyModeDirect': '直接接続',
+  'settings.general.networkProxyModeDirectDescription': 'プロバイダー API リクエストに継承されたプロキシ設定を使用しません。',
   'settings.general.networkProxyModeSystem': 'システムプロキシ',
   'settings.general.networkProxyModeSystemDescription': 'アプリプロセスが継承したプロキシ設定を使用します。',
   'settings.general.networkProxyModeManual': '手動プロキシ',

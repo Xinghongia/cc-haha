@@ -1092,6 +1092,8 @@ export const kr: Record<TranslationKey, string> = {
   'settings.general.h5AccessProxyNote': '현재 리버스 프록시 URL을 사용하고 있습니다. 휴대폰은 구성한 공개 도메인 / 터널을 통해 데스크톱에 연결됩니다. 프록시가 계속 작동 중인지 확인하세요.',
   'settings.general.networkTitle': '네트워크',
   'settings.general.networkDescription': '데스크톱 세션이 수행하는 공급자 API 요청을 제어합니다.',
+  'settings.general.networkProxyModeDirect': '직접 연결',
+  'settings.general.networkProxyModeDirectDescription': '공급자 API 요청에 상속된 프록시 설정을 사용하지 않습니다.',
   'settings.general.networkProxyModeSystem': '시스템 프록시',
   'settings.general.networkProxyModeSystemDescription': '앱 프로세스가 상속한 프록시 설정을 사용합니다.',
   'settings.general.networkProxyModeManual': '수동 프록시',

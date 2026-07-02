@@ -1656,6 +1656,74 @@ describe('ProviderService', () => {
       }
     })
 
+    test('bypasses inherited system proxy when testing direct provider endpoints', async () => {
+      await fs.writeFile(
+        path.join(tmpDir, 'settings.json'),
+        JSON.stringify({
+          network: {
+            proxy: { mode: 'direct', url: '' },
+          },
+        }),
+        'utf-8',
+      )
+      const originalFetch = globalThis.fetch
+      const originalHttpProxy = process.env.HTTP_PROXY
+      const originalHttpsProxy = process.env.HTTPS_PROXY
+      const originalLowerHttpProxy = process.env.http_proxy
+      const originalLowerHttpsProxy = process.env.https_proxy
+      const calls: Array<{ url: string; proxy?: string }> = []
+      process.env.HTTP_PROXY = 'http://127.0.0.1:1181'
+      process.env.HTTPS_PROXY = 'http://127.0.0.1:1181'
+      delete process.env.http_proxy
+      delete process.env.https_proxy
+      globalThis.fetch = mock(async (url: string | URL | Request, init?: RequestInit) => {
+        calls.push({
+          url: String(url),
+          proxy: (init as RequestInit & { proxy?: string } | undefined)?.proxy,
+        })
+        return new Response(JSON.stringify({
+          id: 'chatcmpl-direct',
+          object: 'chat.completion',
+          created: 0,
+          model: 'remote-model',
+          choices: [{ index: 0, message: { role: 'assistant', content: 'ok' }, finish_reason: 'stop' }],
+          usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      }) as typeof fetch
+
+      try {
+        const svc = new ProviderService()
+        const result = await svc.testProviderConfig({
+          baseUrl: 'https://api.example.com',
+          apiKey: 'remote-key',
+          modelId: 'remote-model',
+          authStrategy: 'api_key',
+          apiFormat: 'openai_chat',
+        })
+
+        expect(result.connectivity.success).toBe(true)
+        expect(result.proxy?.success).toBe(true)
+        expect(calls.map((call) => call.url)).toEqual([
+          'https://api.example.com/v1/chat/completions',
+          'https://api.example.com/v1/chat/completions',
+        ])
+        expect(calls.map((call) => call.proxy)).toEqual([undefined, undefined])
+      } finally {
+        globalThis.fetch = originalFetch
+        if (originalHttpProxy === undefined) delete process.env.HTTP_PROXY
+        else process.env.HTTP_PROXY = originalHttpProxy
+        if (originalHttpsProxy === undefined) delete process.env.HTTPS_PROXY
+        else process.env.HTTPS_PROXY = originalHttpsProxy
+        if (originalLowerHttpProxy === undefined) delete process.env.http_proxy
+        else process.env.http_proxy = originalLowerHttpProxy
+        if (originalLowerHttpsProxy === undefined) delete process.env.https_proxy
+        else process.env.https_proxy = originalLowerHttpsProxy
+      }
+    })
+
     test('should use configured network timeout for provider tests', async () => {
       await fs.writeFile(
         path.join(tmpDir, 'settings.json'),

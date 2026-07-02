@@ -35,11 +35,9 @@ import {
   normalizeModelMapping,
   normalizeProvidersIndex,
 } from './providerRuntimeEnv.js'
-import { getProxyFetchOptions } from '../../utils/proxy.js'
 import {
-  getManualNetworkProxyUrl,
+  getNetworkProxyFetchOptions,
   loadNetworkSettings,
-  mergeLoopbackNoProxy,
   type NetworkSettings,
 } from './networkSettings.js'
 import { normalizeModelStringForAPI } from '../../utils/model/model.js'
@@ -603,11 +601,7 @@ export class ProviderService {
     const start = Date.now()
     try {
       const { url, headers, body } = buildDirectTestRequest(base, apiKey, modelId, format, authStrategy)
-      const proxyOptions = getProxyFetchOptions({
-        proxyUrl: getManualNetworkProxyUrl(networkSettings),
-        targetUrl: url,
-        noProxy: mergeLoopbackNoProxy(process.env.no_proxy || process.env.NO_PROXY),
-      })
+      const proxyOptions = getNetworkProxyFetchOptions(networkSettings, url)
       const response = await fetch(url, {
         method: 'POST',
         headers,
@@ -670,11 +664,7 @@ export class ProviderService {
         transformedBody = anthropicToOpenaiResponses(anthropicReq)
         upstreamUrl = `${base}/v1/responses`
       }
-      const proxyOptions = getProxyFetchOptions({
-        proxyUrl: getManualNetworkProxyUrl(networkSettings),
-        targetUrl: upstreamUrl,
-        noProxy: mergeLoopbackNoProxy(process.env.no_proxy || process.env.NO_PROXY),
-      })
+      const proxyOptions = getNetworkProxyFetchOptions(networkSettings, upstreamUrl)
 
       // Call upstream with transformed request
       const response = await fetch(upstreamUrl, {
