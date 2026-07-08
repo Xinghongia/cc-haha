@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { sessionsApi } from '../api/sessions'
-import { SETTINGS_TAB_ID, SKILL_CENTER_TAB_ID, useTabStore } from './tabStore'
+import { SETTINGS_TAB_ID, MARKET_TAB_ID, useTabStore } from './tabStore'
 
 vi.mock('../api/sessions', () => ({
   sessionsApi: {
@@ -30,7 +30,7 @@ describe('tabStore', () => {
 
   it('repairs an existing special tab type when opened through its canonical entrypoint', () => {
     useTabStore.setState({
-      tabs: [{ sessionId: SETTINGS_TAB_ID, title: 'Skills', type: 'skill-center', status: 'idle' }],
+      tabs: [{ sessionId: SETTINGS_TAB_ID, title: 'Market', type: 'market', status: 'idle' }],
       activeTabId: SETTINGS_TAB_ID,
     })
 
@@ -134,30 +134,30 @@ describe('tabStore', () => {
     ])
   })
 
-  it('restores the skill center tab without requiring a server session', async () => {
+  it('restores the market tab without requiring a server session', async () => {
     localStorage.setItem('cc-haha-open-tabs', JSON.stringify({
-      openTabs: [{ sessionId: SKILL_CENTER_TAB_ID, title: 'Skills', type: 'skill-center' }],
-      activeTabId: SKILL_CENTER_TAB_ID,
+      openTabs: [{ sessionId: MARKET_TAB_ID, title: 'Market', type: 'market' }],
+      activeTabId: MARKET_TAB_ID,
     }))
 
     await useTabStore.getState().restoreTabs()
 
     expect(useTabStore.getState().tabs).toEqual([
       {
-        sessionId: SKILL_CENTER_TAB_ID,
-        title: 'Skills',
-        type: 'skill-center',
+        sessionId: MARKET_TAB_ID,
+        title: 'Market',
+        type: 'market',
         status: 'idle',
       },
     ])
-    expect(useTabStore.getState().activeTabId).toBe(SKILL_CENTER_TAB_ID)
+    expect(useTabStore.getState().activeTabId).toBe(MARKET_TAB_ID)
   })
 
   it('canonicalizes mismatched persisted special tab ids and types during restore', async () => {
     localStorage.setItem('cc-haha-open-tabs', JSON.stringify({
       openTabs: [
-        { sessionId: SETTINGS_TAB_ID, title: 'Settings', type: 'skill-center' },
-        { sessionId: SKILL_CENTER_TAB_ID, title: 'Skills', type: 'settings' },
+        { sessionId: SETTINGS_TAB_ID, title: 'Settings', type: 'market' },
+        { sessionId: MARKET_TAB_ID, title: 'Market', type: 'settings' },
       ],
       activeTabId: SETTINGS_TAB_ID,
     }))
@@ -172,9 +172,9 @@ describe('tabStore', () => {
         status: 'idle',
       },
       {
-        sessionId: SKILL_CENTER_TAB_ID,
-        title: 'Skills',
-        type: 'skill-center',
+        sessionId: MARKET_TAB_ID,
+        title: 'Market',
+        type: 'market',
         status: 'idle',
       },
     ])

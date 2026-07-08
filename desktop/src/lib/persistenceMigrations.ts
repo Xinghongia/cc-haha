@@ -20,11 +20,11 @@ const SESSION_RUNTIME_STORAGE_KEY = 'cc-haha-session-runtime'
 const THEME_STORAGE_KEY = 'cc-haha-theme'
 const LOCALE_STORAGE_KEY = 'cc-haha-locale'
 const EFFORT_LEVELS = ['low', 'medium', 'high', 'max']
-const PERSISTED_SPECIAL_TAB_TYPES = ['settings', 'scheduled', 'skill-center', 'traces'] as const
+const PERSISTED_SPECIAL_TAB_TYPES = ['settings', 'scheduled', 'market', 'traces'] as const
 const PERSISTED_SPECIAL_TAB_IDS: Record<(typeof PERSISTED_SPECIAL_TAB_TYPES)[number], string> = {
   settings: '__settings__',
   scheduled: '__scheduled__',
-  'skill-center': '__skill_center__',
+  market: '__market__',
   traces: '__traces__',
 }
 const SUPPORTED_LOCALES = ['en', 'zh', 'zh-TW', 'jp', 'kr']
@@ -46,7 +46,7 @@ function isPersistedSpecialTabType(value: unknown): value is (typeof PERSISTED_S
 function getPersistedSpecialTabType(tab: Record<string, unknown>): (typeof PERSISTED_SPECIAL_TAB_TYPES)[number] | null {
   if (tab.sessionId === '__settings__') return 'settings'
   if (tab.sessionId === '__scheduled__') return 'scheduled'
-  if (tab.sessionId === '__skill_center__') return 'skill-center'
+  if (tab.sessionId === '__market__') return 'market'
   if (tab.sessionId === '__traces__') return 'traces'
   return isPersistedSpecialTabType(tab.type) ? tab.type : null
 }

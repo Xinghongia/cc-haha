@@ -26,8 +26,8 @@ vi.mock('../../pages/Settings', () => ({
   Settings: () => <div data-testid="settings-page" />,
 }))
 
-vi.mock('../../pages/SkillCenter', () => ({
-  SkillCenter: () => <div data-testid="skill-center-page" />,
+vi.mock('../../pages/Market', () => ({
+  Market: () => <div data-testid="market-page" />,
 }))
 
 vi.mock('../../pages/TerminalSettings', () => ({
@@ -59,7 +59,7 @@ vi.mock('../workbench/WorkbenchTab', () => ({
 }))
 
 import { ContentRouter } from './ContentRouter'
-import { SKILL_CENTER_TAB_ID, useTabStore } from '../../stores/tabStore'
+import { MARKET_TAB_ID, useTabStore } from '../../stores/tabStore'
 
 describe('ContentRouter tab surfaces', () => {
   afterEach(() => {
@@ -200,20 +200,20 @@ describe('ContentRouter tab surfaces', () => {
     expect(screen.queryByTestId('subagent-run-page')).not.toBeInTheDocument()
   })
 
-  it('renders the skill center tab without mounting the chat session surface', () => {
+  it('renders the market tab without mounting the chat session surface', () => {
     useTabStore.setState({
       tabs: [{
-        sessionId: SKILL_CENTER_TAB_ID,
-        title: 'Skills',
-        type: 'skill-center',
+        sessionId: MARKET_TAB_ID,
+        title: 'Market',
+        type: 'market',
         status: 'idle',
       }],
-      activeTabId: SKILL_CENTER_TAB_ID,
+      activeTabId: MARKET_TAB_ID,
     })
 
     render(<ContentRouter />)
 
-    expect(screen.getByTestId('skill-center-page')).toBeInTheDocument()
+    expect(screen.getByTestId('market-page')).toBeInTheDocument()
     expect(screen.queryByTestId('active-session')).not.toBeInTheDocument()
   })
 

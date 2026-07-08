@@ -3,8 +3,8 @@ import { useTabStore } from '../../stores/tabStore'
 import { EmptySession } from '../../pages/EmptySession'
 import { ActiveSession } from '../../pages/ActiveSession'
 import { ScheduledTasks } from '../../pages/ScheduledTasks'
+import { Market } from '../../pages/Market'
 import { Settings } from '../../pages/Settings'
-import { SkillCenter } from '../../pages/SkillCenter'
 import { TerminalSettings } from '../../pages/TerminalSettings'
 import { TraceList } from '../../pages/TraceList'
 import { TraceSession } from '../../pages/TraceSession'
@@ -30,8 +30,8 @@ export function ContentRouter() {
     page = <Settings />
   } else if (activeTabType === 'scheduled') {
     page = <ScheduledTasks />
-  } else if (activeTabType === 'skill-center') {
-    page = <SkillCenter />
+  } else if (activeTabType === 'market') {
+    page = <Market />
   } else if (activeTabType === 'trace') {
     const traceSessionId = tabs.find((t) => t.sessionId === activeTabId)?.traceSessionId
     page = traceSessionId ? <TraceSession sessionId={traceSessionId} /> : <EmptySession />

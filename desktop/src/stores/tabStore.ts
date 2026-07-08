@@ -7,15 +7,15 @@ const TAB_STORAGE_KEY = 'cc-haha-open-tabs'
 
 export const SETTINGS_TAB_ID = '__settings__'
 export const SCHEDULED_TAB_ID = '__scheduled__'
-export const SKILL_CENTER_TAB_ID = '__skill_center__'
+export const MARKET_TAB_ID = '__market__'
 export const TRACE_LIST_TAB_ID = '__traces__'
 export const TERMINAL_TAB_PREFIX = '__terminal__'
 export const TRACE_TAB_PREFIX = '__trace__'
 export const WORKBENCH_TAB_PREFIX = '__workbench__'
 export const SUBAGENT_TAB_PREFIX = '__subagent__'
 
-export type TabType = 'session' | 'settings' | 'scheduled' | 'skill-center' | 'terminal' | 'trace' | 'traces' | 'workbench' | 'subagent'
-type PersistentSpecialTabType = 'settings' | 'scheduled' | 'skill-center' | 'traces'
+export type TabType = 'session' | 'settings' | 'scheduled' | 'market' | 'terminal' | 'trace' | 'traces' | 'workbench' | 'subagent'
+type PersistentSpecialTabType = 'settings' | 'scheduled' | 'market' | 'traces'
 
 export type Tab = {
   sessionId: string
@@ -59,16 +59,16 @@ type TabStore = {
 const PERSISTENT_SPECIAL_TAB_IDS: Record<PersistentSpecialTabType, string> = {
   settings: SETTINGS_TAB_ID,
   scheduled: SCHEDULED_TAB_ID,
-  'skill-center': SKILL_CENTER_TAB_ID,
+  market: MARKET_TAB_ID,
   traces: TRACE_LIST_TAB_ID,
 }
 
 function getPersistentSpecialTabType(tab: Pick<Tab, 'sessionId'> & { type?: TabType }): PersistentSpecialTabType | null {
   if (tab.sessionId === SETTINGS_TAB_ID) return 'settings'
   if (tab.sessionId === SCHEDULED_TAB_ID) return 'scheduled'
-  if (tab.sessionId === SKILL_CENTER_TAB_ID) return 'skill-center'
+  if (tab.sessionId === MARKET_TAB_ID) return 'market'
   if (tab.sessionId === TRACE_LIST_TAB_ID) return 'traces'
-  if (tab.type === 'settings' || tab.type === 'scheduled' || tab.type === 'skill-center' || tab.type === 'traces') {
+  if (tab.type === 'settings' || tab.type === 'scheduled' || tab.type === 'market' || tab.type === 'traces') {
     return tab.type
   }
   return null

@@ -1217,9 +1217,9 @@ describe('TabBar', () => {
     expect(useTabStore.getState().tabs).toEqual([])
   })
 
-  it('closes the skill center tab from the close button without disconnecting chat sessions', async () => {
+  it('closes the market tab from the close button without disconnecting chat sessions', async () => {
     const { TabBar } = await import('./TabBar')
-    const { SKILL_CENTER_TAB_ID, useTabStore } = await import('../../stores/tabStore')
+    const { MARKET_TAB_ID, useTabStore } = await import('../../stores/tabStore')
     const { useChatStore } = await import('../../stores/chatStore')
 
     const disconnectSession = vi.fn()
@@ -1227,9 +1227,9 @@ describe('TabBar', () => {
     useTabStore.setState({
       tabs: [
         { sessionId: 'tab-1', title: 'First Session', type: 'session', status: 'idle' },
-        { sessionId: SKILL_CENTER_TAB_ID, title: 'Skills', type: 'skill-center', status: 'idle' },
+        { sessionId: MARKET_TAB_ID, title: 'Market', type: 'market', status: 'idle' },
       ],
-      activeTabId: SKILL_CENTER_TAB_ID,
+      activeTabId: MARKET_TAB_ID,
     })
     useChatStore.setState({
       sessions: {},
@@ -1240,7 +1240,7 @@ describe('TabBar', () => {
       render(<TabBar />)
     })
 
-    fireEvent.click(screen.getByLabelText('Close Skills'))
+    fireEvent.click(screen.getByLabelText('Close Market'))
 
     expect(disconnectSession).not.toHaveBeenCalled()
     expect(useTabStore.getState().tabs.map((tab) => tab.sessionId)).toEqual(['tab-1'])
@@ -1453,17 +1453,17 @@ describe('TabBar', () => {
     expect(useActivityPanelStore.getState().isOpen(tabId)).toBe(false)
   })
 
-  it('treats the skill center tab as a non-session toolbar target', async () => {
+  it('treats the market tab as a non-session toolbar target', async () => {
     const { TabBar } = await import('./TabBar')
-    const { SKILL_CENTER_TAB_ID, useTabStore } = await import('../../stores/tabStore')
+    const { MARKET_TAB_ID, useTabStore } = await import('../../stores/tabStore')
     const { useChatStore } = await import('../../stores/chatStore')
     const { useTerminalPanelStore } = await import('../../stores/terminalPanelStore')
 
     useTabStore.setState({
       tabs: [
-        { sessionId: SKILL_CENTER_TAB_ID, title: 'Skills', type: 'skill-center', status: 'idle' },
+        { sessionId: MARKET_TAB_ID, title: 'Market', type: 'market', status: 'idle' },
       ],
-      activeTabId: SKILL_CENTER_TAB_ID,
+      activeTabId: MARKET_TAB_ID,
     })
     useChatStore.setState({
       sessions: {},
@@ -1482,7 +1482,7 @@ describe('TabBar', () => {
     const terminalTabs = useTabStore.getState().tabs.filter((tab) => tab.type === 'terminal')
     expect(terminalTabs).toHaveLength(1)
     expect(useTabStore.getState().activeTabId).toBe(terminalTabs[0]?.sessionId)
-    expect(useTerminalPanelStore.getState().isPanelOpen(SKILL_CENTER_TAB_ID)).toBe(false)
+    expect(useTerminalPanelStore.getState().isPanelOpen(MARKET_TAB_ID)).toBe(false)
   })
 
   it('clears session panel state when closing a session tab', async () => {

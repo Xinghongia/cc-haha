@@ -29,7 +29,7 @@ vi.mock('../../api/skills', () => ({
 
 import { LocalSlashCommandPanel } from './LocalSlashCommandPanel'
 import { useSettingsStore } from '../../stores/settingsStore'
-import { useTabStore, SETTINGS_TAB_ID, SKILL_CENTER_TAB_ID } from '../../stores/tabStore'
+import { useTabStore, SETTINGS_TAB_ID } from '../../stores/tabStore'
 import { useUIStore } from '../../stores/uiStore'
 import { useSkillStore } from '../../stores/skillStore'
 import type { SessionContextSnapshot, SessionInspectionResponse } from '../../api/sessions'
@@ -192,9 +192,9 @@ describe('LocalSlashCommandPanel memory context', () => {
 
     await waitFor(() => {
       expect(fetchSkillDetail).toHaveBeenCalledWith('user', 'ppt-generator', '/workspace/demo', 'skills')
-      expect(useTabStore.getState().activeTabId).toBe(SKILL_CENTER_TAB_ID)
+      expect(useTabStore.getState().activeTabId).toBe(SETTINGS_TAB_ID)
     })
-    expect(useUIStore.getState().pendingSettingsTab).toBeNull()
+    expect(useUIStore.getState().pendingSettingsTab).toBe('skills')
     expect(onClose).toHaveBeenCalled()
   })
 })
